@@ -7,44 +7,47 @@ public class BubbleSort {
         throw new IllegalStateException();
     }
 
-    public static void sort(int[] data) {
-//        sort(data, DESC);
+    public static <T extends Comparable> void sort(T[] data) {
         sort(data, ASC);
     }
 
-    public static void sort(int[] data, Direction direction) {
-        for (int out = data.length - 1; out > 1; out--) {
-            for (int in = 0; in < out; in++) {
-                if (direction == ASC) {
-                    if (data[in] > data[in + 1])
-                        swap(data, in, in + 1);
-                } else {
-                    if (data[in] < data[in + 1])
-                        swap(data, in + 1, in);
-                }
+    @SuppressWarnings("unchecked")
+    public static <T extends Comparable> void sort(T[] data, Direction direction) {
+        if (isArrayContainsNullElements(data))
+            return;
 
+        for (int out = data.length - 1; out > 0; out--) {
+            for (int in = 0; in < out; in++) {
+                switch (direction) {
+                    case ASC:
+                        if (data[in].compareTo(data[in + 1]) > 0)
+                            swap(data, in, in + 1);
+                        break;
+                    case DESC:
+                        if (data[in].compareTo(data[in + 1]) < 0)
+                            swap(data, in + 1, in);
+                        break;
+                }
             }
         }
 
     }
 
+    private static <T extends Comparable> boolean isArrayContainsNullElements(T[] data) {
+        for (T element : data) {
+            if (element == null)
+                return true;
+        }
+        return false;
+    }
 
-    private static void swap(int[] data, int position1, int position2) {
-        int temp = data[position1];
+    private static <T extends Comparable> void swap(T[] data, int position1, int position2) {
+        T temp = data[position1];
         data[position1] = data[position2];
         data[position2] = temp;
     }
 
     enum Direction {
         ASC, DESC
-    }
-
-    public static void main(String[] args) {
-        int[] ints = {1, 4, 2, 5, 3, 7, 8,  6, 0, 9};
-        BubbleSort.sort(ints);
-        for (int i = 0; i < ints.length - 1; i++) {
-            System.out.print(ints[i]);
-        }
-        System.out.println();
     }
 }
