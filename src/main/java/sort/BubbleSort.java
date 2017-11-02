@@ -30,7 +30,6 @@ public class BubbleSort {
                 }
             }
         }
-
     }
 
     private static <T extends Comparable> boolean isArrayContainsNullElements(T[] data) {
@@ -47,7 +46,7 @@ public class BubbleSort {
         data[position2] = temp;
     }
 
-    enum Direction {
+    public enum Direction {
         ASC, DESC
     }
 }
