@@ -28,17 +28,17 @@ public class Port {
 
     public void processShip(@NotNull Ship ship, int cargoCount, @NotNull Process process) {
         if (process == LOADING) {
-            checkPortCapacity(cargoCount, false);
-            ship.loadContainer(cargoCount);
             synchronized (this) {
+                checkPortCapacity(cargoCount, false);
                 this.containersCount -= cargoCount;
             }
+            ship.loadContainer(cargoCount);
         } else {
-            checkPortCapacity(cargoCount, true);
-            ship.unloadContainer(cargoCount);
             synchronized (this) {
+                checkPortCapacity(cargoCount, true);
                 this.containersCount += cargoCount;
             }
+            ship.unloadContainer(cargoCount);
         }
     }
 
